@@ -1,7 +1,7 @@
 package com.br.repogit.domain.repository
 
-import com.br.repogit.domain.GithubDomainResponse
+import com.br.repogit.presentation.mapper.GithubPresentation
 
 interface GithubRepository {
-    suspend fun getRepositories(): GithubDomainResponse
+    suspend fun getRepositories(): GithubPresentation
 }

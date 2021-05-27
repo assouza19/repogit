@@ -1,33 +1,35 @@
 package com.br.repogit.data.mapper
 
 import com.br.repogit.data.model.RepositoriesResponse
-import com.br.repogit.domain.GithubDomainResponse
-import com.br.repogit.domain.model.RepositoriesDomain
+import com.br.repogit.presentation.mapper.GithubPresentation
+import com.br.repogit.presentation.mapper.RepositoryItemPresentationMapper
+import com.br.repogit.presentation.model.RepositoriesPresentation
 import com.br.repogit.utils.Mapper
 
 class RepositoryDomainMapper :
-    Mapper<RepositoriesResponse?, GithubDomainResponse> {
+    Mapper<RepositoriesResponse?, GithubPresentation> {
 
     private val itemMapper = RepositoryItemDomainMapper()
+    private val itemMapperPresentation = RepositoryItemPresentationMapper()
 
-    override fun map(source: RepositoriesResponse?): GithubDomainResponse {
+    override fun map(source: RepositoriesResponse?): GithubPresentation {
         return if (source == null) {
-            GithubDomainResponse.ErrorResponse
+            GithubPresentation.ErrorResponse
         } else {
             if (source.items.isEmpty()) {
-                GithubDomainResponse.EmptyResponse
+                GithubPresentation.EmptyResponse
             } else {
-                source.asDomain(source)
+                source.asPresentation(source)
             }
         }
     }
 
-    private fun RepositoriesResponse.asDomain(list: RepositoriesResponse) =
-        GithubDomainResponse.SuccessResponse(
-            RepositoriesDomain(
+    private fun RepositoriesResponse.asPresentation(list: RepositoriesResponse) =
+        GithubPresentation.SuccessResponse(
+            RepositoriesPresentation(
                 totalCount = list.totalCount,
                 incompleteResults = list.incompleteResults,
-                items = itemMapper.map(list.items)
+                items = itemMapperPresentation.map(itemMapper.map(list.items))
             )
         )
 }

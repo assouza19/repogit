@@ -1,6 +1,7 @@
 package com.br.repogit.data.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -24,6 +25,7 @@ object RetrofitClient {
             .build()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun getKSerializationConverterFactory(): Converter.Factory {
         val contentType = MediaType.get(JSON_MEDIA_TYPE)
         val json = buildJson()
