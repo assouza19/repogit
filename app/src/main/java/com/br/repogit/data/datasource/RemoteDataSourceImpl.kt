@@ -7,6 +7,7 @@ import com.br.repogit.utils.orEmpty
 import com.br.repogit.utils.orFalse
 
 private const val INITIAL_PAGE = 1
+private const val EMPTY_LIST = 0L
 
 class RemoteDataSourceImpl(
     private val api: GitHubService
@@ -26,7 +27,7 @@ class RemoteDataSourceImpl(
 
     private fun checkBody(data: RepositoriesResponse?): RepositoriesResponse {
         return if (data.isNullOrEmpty() || data?.items?.isEmpty().orFalse()) {
-            RepositoriesResponse(0, true, listOf())
+            RepositoriesResponse(EMPTY_LIST, true, listOf())
         } else {
             currentPage++
             data.orEmpty()

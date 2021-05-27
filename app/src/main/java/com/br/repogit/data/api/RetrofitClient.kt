@@ -1,42 +1,29 @@
 package com.br.repogit.data.api
 
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-private const val JSON_MEDIA_TYPE = "application/json"
-private const val BASE_URL = "https://api.github.com"
+private const val BASE_URL = "https://api.github.com/"
 
 object RetrofitClient {
 
-    fun newInstance(): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttp)
-            .addConverterFactory(getKSerializationConverterFactory())
-            .build()
+    fun newInstance(): GitHubService = retrofit.create(GitHubService::class.java)
+
+    private val gson: Gson by lazy { GsonBuilder().create() }
 
     private val okHttp: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .build()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    private fun getKSerializationConverterFactory(): Converter.Factory {
-        val contentType = MediaType.get(JSON_MEDIA_TYPE)
-        val json = buildJson()
-
-        return json.asConverterFactory(contentType)
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttp)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
     }
-
-    private fun buildJson() =
-        Json {
-            encodeDefaults = true
-            ignoreUnknownKeys = true
-            isLenient = true
-        }
 }

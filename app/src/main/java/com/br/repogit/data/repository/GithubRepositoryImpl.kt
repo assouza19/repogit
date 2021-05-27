@@ -7,8 +7,9 @@ import com.br.repogit.domain.repository.GithubRepository
 
 class GithubRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
-    private val mapper: RepositoryDomainMapper
 ) : GithubRepository {
+
+    private val mapper = RepositoryDomainMapper()
 
     override suspend fun getRepositories(): GithubPresentation {
         return mapper.map(remoteDataSource.getRepositories())

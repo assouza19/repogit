@@ -1,5 +1,6 @@
 package com.br.repogit.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.br.repogit.domain.usecase.GetRepositoriesUseCase
@@ -20,11 +21,17 @@ class GithubViewModel(
                     getRepositoriesUseCase()
                 }
             }.onSuccess {
+                Log.d("sucesso", "teste")
                 handlerSuccess(it)
             }.onFailure {
-
+                Log.d("falha", "teste")
+                handleFailure(it)
             }
         }
+    }
+
+    private fun handleFailure(throwable: Throwable) {
+       Log.d("teste", throwable.message.toString())
     }
 
     private fun handlerSuccess(data: GithubPresentation) {
