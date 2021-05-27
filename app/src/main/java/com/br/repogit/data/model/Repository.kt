@@ -5,10 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Repository (
+    @SerialName("id")
     val id: Long,
-
-    @SerialName("node_id")
-    val nodeID: String,
 
     @SerialName("name")
     val name: String,
