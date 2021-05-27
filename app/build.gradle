@@ -58,10 +58,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     // Koin
-    implementation "org.koin:koin-core:2.2.2"
-    implementation "org.koin:koin-android:2.2.2"
-    implementation "org.koin:koin-android-scope:2.2.2"
-    implementation "org.koin:koin-androidx-viewmodel:2.2.2"
+    implementation "io.insert-koin:koin-android:3.0.2"
+    implementation "io.insert-koin:koin-android-ext:3.0.2"
+    implementation "io.insert-koin:koin-androidx-workmanager:3.0.2"
 
     // KSerialization || Retrofit
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
@@ -73,5 +72,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation "org.koin:koin-test:2.2.2"
+    implementation "io.insert-koin:koin-test:3.0.2"
 }
