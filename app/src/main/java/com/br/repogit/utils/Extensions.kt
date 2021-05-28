@@ -3,7 +3,7 @@ package com.br.repogit.utils
 import com.br.repogit.data.model.RepositoriesResponse
 
 fun RepositoriesResponse?.isNullOrEmpty(): Boolean {
-    return this == null || this.items.isEmpty()
+    return this == null || this.items.isNullOrEmpty()
 }
 
 fun Boolean?.orFalse() = this ?: false
