@@ -1,31 +1,29 @@
 package com.br.repogit.data.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
-data class Repository (
-    @SerialName("id")
-    val id: Long,
+data class Repository(
+    @SerializedName("id")
+    val id: Int,
 
-    @SerialName("name")
-    val name: String,
+    @SerializedName("name")
+    val name: String? = null,
 
-    @SerialName("full_name")
-    val fullName: String,
+    @SerializedName("full_name")
+    val fullName: String? = null,
 
-    @SerialName("private")
+    @SerializedName("private")
     val private: Boolean,
 
-    @SerialName("owner")
+    @SerializedName("owner")
     val owner: Owner,
 
-    @SerialName("description")
+    @SerializedName("description")
     val description: String? = null,
 
-    @SerialName("forks_count")
-    val forksCount: Long,
+    @SerializedName("forks_count")
+    val forksCount: Int? = 0,
 
-    @SerialName("stargazers_count")
-    val stargazersCount: Long
+    @SerializedName("stargazers_count")
+    val stargazersCount: Int? = 0
 )

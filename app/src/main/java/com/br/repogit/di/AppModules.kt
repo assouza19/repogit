@@ -20,10 +20,10 @@ val presentationModules = module {
 }
 
 val dataModules = module {
-    factory<RemoteDataSource> { RemoteDataSourceImpl(api = get()) }
+    factory<RemoteDataSource> { RemoteDataSourceImpl(retrofit = get()) }
     factory<GithubRepository> { GithubRepositoryImpl(remoteDataSource = get()) }
 }
 
 val anotherModules = module {
-    single { RetrofitClient.newInstance() }
+    single { RetrofitClient() }
 }

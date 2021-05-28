@@ -8,8 +8,8 @@ class OwnerDomainMapper : Mapper<Owner, OwnerDomain> {
 
     override fun map(source: Owner): OwnerDomain {
         return OwnerDomain(
-            name = source.name,
-            avatarURL = source.avatarURL
+            name = source.name.orEmpty(),
+            avatarURL = source.avatarURL.orEmpty()
         )
     }
 }

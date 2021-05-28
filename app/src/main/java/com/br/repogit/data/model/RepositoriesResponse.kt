@@ -1,16 +1,14 @@
 package com.br.repogit.data.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
-data class RepositoriesResponse (
-    @SerialName("total_count")
+data class RepositoriesResponse(
+    @SerializedName("total_count")
     val totalCount: Long,
 
-    @SerialName("incomplete_results")
+    @SerializedName("incomplete_results")
     val incompleteResults: Boolean,
 
-    @SerialName("items")
+    @SerializedName("items")
     val items: List<Repository>
 )

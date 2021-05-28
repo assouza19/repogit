@@ -1,13 +1,11 @@
 package com.br.repogit.data.model
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.SerializedName
 
-@Serializable
-data class Owner (
-    @SerialName("login")
-    val name: String,
+data class Owner(
+    @SerializedName("login")
+    val name: String? = "",
 
-    @SerialName("avatar_url")
-    val avatarURL: String
+    @SerializedName("avatar_url")
+    val avatarURL: String? = ""
 )

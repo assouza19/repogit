@@ -12,13 +12,13 @@ class RepositoryItemDomainMapper : Mapper<List<Repository>, List<RepositoryDomai
         return source.map {
             RepositoryDomain(
                 id = it.id,
-                name = it.name,
-                fullName = it.fullName,
+                name = it.name.orEmpty(),
+                fullName = it.fullName.orEmpty(),
                 private = it.private,
                 owner = ownerMapper.map(it.owner),
                 description = it.description,
-                stargazersCount = it.stargazersCount,
-                forksCount = it.forksCount
+                stargazersCount = it.stargazersCount ?: 0,
+                forksCount = it.forksCount ?: 0
             )
         }
     }

@@ -2,8 +2,8 @@ package com.br.repogit.data.repository
 
 import com.br.repogit.data.datasource.RemoteDataSource
 import com.br.repogit.data.mapper.RepositoryDomainMapper
-import com.br.repogit.presentation.mapper.GithubPresentation
 import com.br.repogit.domain.repository.GithubRepository
+import com.br.repogit.presentation.mapper.GithubPresentation
 
 class GithubRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,

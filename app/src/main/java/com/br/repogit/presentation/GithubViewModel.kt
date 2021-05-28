@@ -12,30 +12,28 @@ import kotlin.coroutines.CoroutineContext
 class GithubViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase,
     private val dispatcher: CoroutineContext
-): ViewModel() {
+) : ViewModel() {
 
     fun getRepositories() {
-        viewModelScope.launch{
-            runCatching {
-                withContext(dispatcher) {
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                runCatching {
                     getRepositoriesUseCase()
+                }.onSuccess {
+                    handlerSuccess(it)
+                }.onFailure {
+                    handleFailure(it)
                 }
-            }.onSuccess {
-                Log.d("sucesso", "teste")
-                handlerSuccess(it)
-            }.onFailure {
-                Log.d("falha", "teste")
-                handleFailure(it)
             }
         }
     }
 
     private fun handleFailure(throwable: Throwable) {
-       Log.d("teste", throwable.message.toString())
+        Log.d("teste", throwable.message.toString())
     }
 
     private fun handlerSuccess(data: GithubPresentation) {
-        when(data) {
+        when (data) {
             GithubPresentation.EmptyResponse -> TODO()
             GithubPresentation.ErrorResponse -> TODO()
             is GithubPresentation.SuccessResponse -> TODO()

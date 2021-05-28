@@ -1,7 +1,6 @@
 package com.br.repogit.presentation
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.br.repogit.R
 import com.br.repogit.databinding.ActivityGithubBinding
