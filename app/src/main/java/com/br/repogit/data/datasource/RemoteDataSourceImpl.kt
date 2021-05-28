@@ -26,7 +26,7 @@ class RemoteDataSourceImpl(
     }
 
     private fun checkBody(data: RepositoriesResponse?): RepositoriesResponse {
-        return if (data.isNullOrEmpty() || data?.items?.isEmpty().orFalse()) {
+        return if (data.isNullOrEmpty() || data?.items.isNullOrEmpty()) {
             RepositoriesResponse(EMPTY_LIST, true, listOf())
         } else {
             currentPage++

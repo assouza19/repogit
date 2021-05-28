@@ -27,7 +27,7 @@ class RetrofitClient {
 
     fun newInstance(): GitHubService = retrofit.create(GitHubService::class.java)
 
-    private val gson: Gson by lazy { GsonBuilder().excludeFieldsWithoutExposeAnnotation().create() }
+    private val gson: Gson by lazy { GsonBuilder().create() }
 
     private val okHttp: OkHttpClient by lazy {
         OkHttpClient.Builder()
