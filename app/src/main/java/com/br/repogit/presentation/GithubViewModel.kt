@@ -16,14 +16,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
+private const val INITIAL_PAGE = 1
+
 class GithubViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase,
     private val dispatcher: CoroutineContext
 ) : ViewModel() {
 
+    private var currentPage : Int = INITIAL_PAGE
+
     private val _emptyResponseEvent = MutableLiveData<SimpleEvent>()
     private val _errorResponseEvent = MutableLiveData<SimpleEvent>()
     private val _showLoadingEvent = MutableLiveData<SimpleEvent>()
+    private val _hasNextEvent = MutableLiveData<Boolean>().apply { value = true }
     private val _successResponseEvent = MutableLiveData<Event<List<RepositoryPresentation>>>()
 
     val emptyResponseEvent: LiveData<SimpleEvent>
@@ -34,8 +39,10 @@ class GithubViewModel(
         get() = _successResponseEvent
     val loadingEvent: LiveData<SimpleEvent>
         get() = _showLoadingEvent
+    val hasNext: LiveData<Boolean>
+        get() = _hasNextEvent
 
-    fun getRepositories() {
+    fun getRepositories(currentPage: Int = INITIAL_PAGE) {
         viewModelScope.launch {
             _showLoadingEvent.triggerEvent()
 
@@ -48,7 +55,7 @@ class GithubViewModel(
                      */
 
                     delay(1500L)
-                    getRepositoriesUseCase()
+                    getRepositoriesUseCase(currentPage)
                 }.onSuccess {
                     handlerSuccess(it)
                 }.onFailure {
@@ -56,6 +63,11 @@ class GithubViewModel(
                 }
             }
         }
+    }
+
+    fun nextPage() {
+        currentPage++
+        getRepositories(currentPage)
     }
 
     private fun handleFailure() {
@@ -66,7 +78,10 @@ class GithubViewModel(
         when (data) {
             is GithubPresentation.EmptyResponse -> _emptyResponseEvent.triggerEvent()
             is GithubPresentation.ErrorResponse -> _errorResponseEvent.triggerEvent()
-            is GithubPresentation.SuccessResponse -> _successResponseEvent.triggerPostEvent(data.items.items)
+            is GithubPresentation.SuccessResponse -> {
+                _hasNextEvent.postValue(data.items.incompleteResults)
+                _successResponseEvent.triggerPostEvent(data.items.items)
+            }
         }
     }
 }

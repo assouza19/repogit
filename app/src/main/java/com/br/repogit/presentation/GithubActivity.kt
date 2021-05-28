@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.br.repogit.R
 import com.br.repogit.databinding.ActivityGithubBinding
 import com.br.repogit.presentation.adapter.GithubAdapter
+import com.br.repogit.utils.orFalse
 import com.br.repogit.utils.subscribe
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val VISIBLE_IMAGES_THRESHOLD = 10
 
 class GithubActivity : AppCompatActivity(R.layout.activity_github) {
 
@@ -26,10 +29,7 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         setContentView(viewBinding.root)
         subscribeEvents()
 
-        viewBinding.recyclerViewRepositories.adapter = adapter
-        viewBinding.recyclerViewRepositories.layoutManager =
-            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
+        configureRecyclerView()
         viewModel.getRepositories()
     }
 
@@ -56,5 +56,33 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
 
     private fun hideLoading() {
         viewBinding.loading.isVisible = false
+    }
+
+    private fun setupInfiniteScrolling(layoutManager: LinearLayoutManager) {
+        viewBinding.recyclerViewRepositories.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (dy > 0 && viewModel.hasNext.value.orFalse()) {
+                    val totalItemCount = layoutManager.itemCount
+                    val lastItem = layoutManager.findFirstVisibleItemPosition()
+
+                    if (totalItemCount <= lastItem + VISIBLE_IMAGES_THRESHOLD) {
+                        viewModel.nextPage()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun configureRecyclerView() {
+        viewBinding.recyclerViewRepositories.adapter = adapter
+
+        val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        viewBinding.recyclerViewRepositories.layoutManager = layoutManager
+
+        setupInfiniteScrolling(layoutManager)
+
     }
 }

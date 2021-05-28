@@ -39,9 +39,8 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:lottie_fileName="main_loading.json"
             app:lottie_autoPlay="true"
+            app:lottie_fileName="main_loading.json"
             app:lottie_loop="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.br.repogit.components.GlassContainerLayout>

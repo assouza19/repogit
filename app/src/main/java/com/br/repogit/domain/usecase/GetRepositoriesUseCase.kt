@@ -6,5 +6,5 @@ class GetRepositoriesUseCase(
     private val repository: GithubRepository
 ) {
 
-    suspend operator fun invoke() = repository.getRepositories()
+    suspend operator fun invoke(currentPage : Int) = repository.getRepositories(currentPage)
 }

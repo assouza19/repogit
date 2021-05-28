@@ -11,7 +11,7 @@ class GithubRepositoryImpl(
 
     private val mapper = RepositoryDomainMapper()
 
-    override suspend fun getRepositories(): GithubPresentation {
-        return mapper.map(remoteDataSource.getRepositories())
+    override suspend fun getRepositories(currentPage: Int): GithubPresentation {
+        return mapper.map(remoteDataSource.getRepositories(currentPage))
     }
 }

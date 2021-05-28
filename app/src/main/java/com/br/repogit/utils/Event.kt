@@ -27,7 +27,7 @@ fun <T : Event<*>> LiveData<T>.subscribe(owner: LifecycleOwner, body: T.() -> Un
 }
 
 fun MutableLiveData<SimpleEvent>.triggerEvent() {
-    this.value = SimpleEvent()
+    this.postValue(SimpleEvent())
 }
 
 fun <T > MutableLiveData<Event<T>>.triggerEvent(data: T) {

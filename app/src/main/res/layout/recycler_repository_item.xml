@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.br.repogit.components.GlassView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="2dp"
+    android:layout_marginBottom="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/iconPrivacy"
+            android:layout_width="24dp"
+            android:importantForAccessibility="no"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewTitle"
+            tools:src="@drawable/ic_private_icon" />
+
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/avatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="12dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toStartOf="@id/textViewTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewTitle"
+            tools:src="@drawable/ic_default_github" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sleeping For Less"
+            tools:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/textViewAuthor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Sleeping For Less"
+            tools:textColor="@color/gray"
+            android:textSize="14sp"
+            android:maxLines="2"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+            app:layout_constraintEnd_toEndOf="@id/textViewTitle"
+            app:layout_constraintStart_toStartOf="@id/textViewTitle"/>
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="@id/textViewTitle"
+            app:layout_constraintStart_toStartOf="@id/textViewTitle"
+            app:layout_constraintTop_toBottomOf="@id/textViewAuthor"
+            tools:text="Android development website for Android developers" />
+
+        <ImageView
+            android:id="@+id/starsIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/avatar"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_star_black"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
+
+        <TextView
+            android:id="@+id/starsDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/starsIcon"
+            app:layout_constraintTop_toTopOf="@id/starsIcon"
+            app:layout_constraintBottom_toBottomOf="@id/starsIcon"
+            android:textColor="@color/gray"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            tools:text="254 stars"/>
+
+        <ImageView
+            android:id="@+id/forksIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/starsDescription"
+            android:layout_marginTop="12dp"
+            android:importantForAccessibility="no"
+            android:layout_marginStart="36dp"
+            android:src="@drawable/ic_gitfork_120084"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
+
+        <TextView
+            android:id="@+id/forksDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/forksIcon"
+            app:layout_constraintTop_toTopOf="@id/forksIcon"
+            app:layout_constraintBottom_toBottomOf="@id/forksIcon"
+            android:textColor="@color/gray"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            tools:text="254 forks"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.br.repogit.components.GlassView>
