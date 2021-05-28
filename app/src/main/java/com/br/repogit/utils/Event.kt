@@ -33,3 +33,7 @@ fun MutableLiveData<SimpleEvent>.triggerEvent() {
 fun <T > MutableLiveData<Event<T>>.triggerEvent(data: T) {
     this.value = Event(data)
 }
+
+fun <T > MutableLiveData<Event<T>>.triggerPostEvent(data: T) {
+    this.postValue(Event(data))
+}
