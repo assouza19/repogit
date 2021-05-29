@@ -20,6 +20,7 @@
             android:importantForAccessibility="no"
             android:layout_height="24dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewTitle"
             app:layout_constraintTop_toTopOf="@id/textViewTitle"
             tools:src="@drawable/ic_private_icon" />
 
@@ -39,9 +40,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/iconPrivacy"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Sleeping For Less"
@@ -52,8 +54,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Sleeping For Less"
-            tools:textColor="@color/gray"
-            android:textSize="14sp"
+            tools:textColor="@color/white"
+            android:textSize="12sp"
             android:maxLines="2"
             app:layout_constraintTop_toBottomOf="@id/textViewTitle"
             app:layout_constraintEnd_toEndOf="@id/textViewTitle"
@@ -66,7 +68,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="@id/textViewTitle"
@@ -75,12 +77,34 @@
             tools:text="Android development website for Android developers" />
 
         <ImageView
-            android:id="@+id/starsIcon"
+            android:id="@+id/positionIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/avatar"
             android:layout_marginTop="12dp"
-            android:src="@drawable/ic_star_black"
+            android:src="@drawable/ic_rank_icon"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
+
+        <TextView
+            android:id="@+id/positionDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/positionIcon"
+            app:layout_constraintTop_toTopOf="@id/positionIcon"
+            app:layout_constraintBottom_toBottomOf="@id/positionIcon"
+            android:textColor="@color/white"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            tools:text="254 stars"/>
+
+        <ImageView
+            android:id="@+id/starsIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/positionDescription"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_star"
             app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
 
         <TextView
@@ -90,7 +114,7 @@
             app:layout_constraintStart_toEndOf="@id/starsIcon"
             app:layout_constraintTop_toTopOf="@id/starsIcon"
             app:layout_constraintBottom_toBottomOf="@id/starsIcon"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:layout_marginStart="8dp"
             android:textSize="16sp"
             tools:text="254 stars"/>
@@ -102,8 +126,8 @@
             app:layout_constraintStart_toEndOf="@id/starsDescription"
             android:layout_marginTop="12dp"
             android:importantForAccessibility="no"
-            android:layout_marginStart="36dp"
-            android:src="@drawable/ic_gitfork_120084"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_gitfork"
             app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
 
         <TextView
@@ -113,7 +137,7 @@
             app:layout_constraintStart_toEndOf="@id/forksIcon"
             app:layout_constraintTop_toTopOf="@id/forksIcon"
             app:layout_constraintBottom_toBottomOf="@id/forksIcon"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:layout_marginStart="8dp"
             android:textSize="16sp"
             tools:text="254 forks"/>

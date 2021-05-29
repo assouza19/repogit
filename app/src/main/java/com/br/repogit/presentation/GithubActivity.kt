@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.br.repogit.R
 import com.br.repogit.databinding.ActivityGithubBinding
 import com.br.repogit.presentation.adapter.GithubAdapter
-import com.br.repogit.utils.orFalse
+import com.br.repogit.presentation.adapter.RepositoryAdapterCallback
 import com.br.repogit.utils.subscribe
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-private const val VISIBLE_IMAGES_THRESHOLD = 10
+internal const val VISIBLE_IMAGES_THRESHOLD = 20
 
 class GithubActivity : AppCompatActivity(R.layout.activity_github) {
 
@@ -21,7 +22,7 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         ActivityGithubBinding.inflate(layoutInflater)
     }
     private val adapter by lazy {
-        GithubAdapter()
+        GithubAdapter(::onRepositoryAdapterCallback)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +39,17 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
             viewBinding.loading.isVisible = true
         }
 
+        viewModel.scrollLoadingEvent.subscribe(this) {
+            viewBinding.loadingNextPage.isVisible = true
+        }
+
         viewModel.emptyResponseEvent.subscribe(this) {
             // SHOW EMPTY STATE
             hideLoading()
+        }
+
+        viewModel.fullResultResponseEvent.subscribe(this) {
+            showFullResultsSnackbar()
         }
 
         viewModel.errorResponseEvent.subscribe(this) {
@@ -49,31 +58,20 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         }
 
         viewModel.successResponseEvent.subscribe(this) {
+            viewBinding.appTitle.isVisible = true
+            viewBinding.background.isVisible = true
             adapter.update(this.data)
             hideLoading()
+        }
+
+        viewModel.showToast.subscribe(this) {
+            showErrorSnackbar()
         }
     }
 
     private fun hideLoading() {
         viewBinding.loading.isVisible = false
-    }
-
-    private fun setupInfiniteScrolling(layoutManager: LinearLayoutManager) {
-        viewBinding.recyclerViewRepositories.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (dy > 0 && viewModel.hasNext.value.orFalse()) {
-                    val totalItemCount = layoutManager.itemCount
-                    val lastItem = layoutManager.findFirstVisibleItemPosition()
-
-                    if (totalItemCount <= lastItem + VISIBLE_IMAGES_THRESHOLD) {
-                        viewModel.nextPage()
-                    }
-                }
-            }
-        })
+        viewBinding.loadingNextPage.isVisible = false
     }
 
     private fun configureRecyclerView() {
@@ -81,8 +79,40 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
 
         val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         viewBinding.recyclerViewRepositories.layoutManager = layoutManager
+    }
 
-        setupInfiniteScrolling(layoutManager)
+    private fun onRepositoryAdapterCallback(repositoryAdapterCallback: RepositoryAdapterCallback) =
+        repositoryAdapterCallback.run {
+            when (this) {
+                RepositoryAdapterCallback.OnNextPage -> viewModel.nextPage()
+            }
+        }
 
+    private fun showFullResultsSnackbar() {
+        var snackbar: Snackbar? = null
+        snackbar = Snackbar.make(
+            viewBinding.recyclerViewRepositories,
+            R.string.full_results,
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(R.string.back_to_top) {
+                viewBinding.recyclerViewRepositories.scrollToPosition(0)
+                snackbar?.dismiss()
+            }
+        snackbar.show()
+    }
+
+    private fun showErrorSnackbar() {
+        var snackbar: Snackbar? = null
+        snackbar = Snackbar.make(
+            viewBinding.recyclerViewRepositories,
+            R.string.couldnt_load,
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(R.string.try_again) {
+                viewModel.nextPage(samePage = true)
+                snackbar?.dismiss()
+            }
+        snackbar.show()
     }
 }

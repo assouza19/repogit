@@ -3,61 +3,41 @@ package com.br.repogit.presentation.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.br.repogit.R
 import com.br.repogit.databinding.RecyclerRepositoryItemBinding
+import com.br.repogit.presentation.VISIBLE_IMAGES_THRESHOLD
 import com.br.repogit.presentation.model.RepositoryPresentation
+import com.br.repogit.utils.ordinalOf
 import com.squareup.picasso.Picasso
 
-class GithubAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+private typealias RepositoryAdapterCallbackAlias = (RepositoryAdapterCallback) -> Unit
+
+internal class GithubAdapter(
+    private val callback: RepositoryAdapterCallbackAlias
+) : ListAdapter<RepositoryPresentation, RecyclerView.ViewHolder>(RepositoryDiff) {
 
     private var repositories: List<RepositoryPresentation> = emptyList()
     private lateinit var viewBinding: RecyclerRepositoryItemBinding
-
-    private val firstItem = 1
-    private val secondItem = 2
-    private val thirdItem = 3
-    private var counter = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         viewBinding = RecyclerRepositoryItemBinding.inflate(inflater)
 
-        return when (viewType) {
-            firstItem -> {
-                ItemsViewHolder(
-                    RecyclerRepositoryItemBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    ),
-                    parent.context
-                )
-            }
-            secondItem -> {
-                ItemsViewHolder(
-                    RecyclerRepositoryItemBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    ),
-                    parent.context
-                )
-            }
-            else -> {
-                ItemsViewHolder(
-                    RecyclerRepositoryItemBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    ),
-                    parent.context
-                )
-            }
-        }
+        return ItemsViewHolder(
+            RecyclerRepositoryItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
+            parent.context
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        checkPagination(position)
+
         when (holder) {
             is ItemsViewHolder -> {
                 holder.update(repositories[position])
@@ -66,8 +46,9 @@ class GithubAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun update(repos: List<RepositoryPresentation>) {
-        this.repositories = repos
-        notifyDataSetChanged()
+        repositories = emptyList()
+        repositories = repos
+        submitList(repositories)
     }
 
     inner class ItemsViewHolder(
@@ -77,7 +58,6 @@ class GithubAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         binding.root
     ) {
         fun update(repositoryItem: RepositoryPresentation) {
-            // Fazer o bind
             binding.textViewTitle.text = repositoryItem.owner.name
             binding.textViewDescription.text = repositoryItem.description
             binding.textViewAuthor.text = repositoryItem.fullName
@@ -87,6 +67,8 @@ class GithubAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             } else {
                 R.drawable.ic_public_icon
             }
+
+            binding.positionDescription.text = ordinalOf(position + 1)
 
             binding.iconPrivacy.setImageResource(iconPrivacy)
 
@@ -104,22 +86,15 @@ class GithubAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        var viewType = 0
-        if (counter < 3) {
-            when (counter) {
-                1 -> viewType = firstItem
-                2 -> viewType = secondItem
-            }
-            counter++
-        } else {
-            viewType = thirdItem
-            counter = 1
+    private fun checkPagination(position: Int) {
+        if (repositories.size - position == VISIBLE_IMAGES_THRESHOLD) {
+            onNextPage()
         }
+    }
 
-        return viewType
+    private fun onNextPage() {
+        callback(RepositoryAdapterCallback.OnNextPage)
     }
 
     override fun getItemCount(): Int = repositories.size
-
 }

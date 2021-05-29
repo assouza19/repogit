@@ -3,4 +3,8 @@
 
     <string name="description_forks">%d forks</string>
     <string name="description_stars">%d stars</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="back_to_top">Voltar ao topo</string>
+    <string name="couldnt_load">Não foi possível carregar os repositórios.</string>
+    <string name="full_results">Eba! Você já viu todos os resultados :)</string>
 </resources>
