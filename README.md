@@ -2,7 +2,7 @@
 <p align="justify"><strong>Projeto - RepoGit</strong></p>
 
 ## Descrição
-O objetivo deste projeto é listar os repositórios que usam Kotlin (como linguagem primária), ordenando por onde de estrelas.
+O objetivo deste projeto é listar os repositórios que usam Kotlin (como linguagem primária), ordenando por quantidade de estrelas.
 Trata-se de um projeto simples, criado apenas como base de estudos.
 
 [![Author](https://img.shields.io/static/v1?label=@author&message=Aline%20Developer&color=important)](https://github.com/assouza19)
