@@ -68,7 +68,7 @@ internal class GithubAdapter(
                 R.drawable.ic_public_icon
             }
 
-            binding.positionDescription.text = ordinalOf(position + 1)
+            binding.positionDescription.text = ordinalOf(layoutPosition + 1)
 
             binding.iconPrivacy.setImageResource(iconPrivacy)
 
