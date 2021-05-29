@@ -1,5 +1,7 @@
 package com.br.repogit.di
 
+import com.br.repogit.data.api.GitHubService
+import com.br.repogit.data.api.HttpClient
 import com.br.repogit.data.api.RetrofitClient
 import com.br.repogit.data.datasource.RemoteDataSource
 import com.br.repogit.data.datasource.RemoteDataSourceImpl
@@ -20,10 +22,12 @@ val presentationModules = module {
 }
 
 val dataModules = module {
-    factory<RemoteDataSource> { RemoteDataSourceImpl(retrofit = get()) }
+    factory<RemoteDataSource> { RemoteDataSourceImpl(service = get()) }
     factory<GithubRepository> { GithubRepositoryImpl(remoteDataSource = get()) }
 }
 
 val anotherModules = module {
-    single { RetrofitClient() }
+    single { RetrofitClient.newInstance() }
+    single { HttpClient(get()) }
+    factory { get<HttpClient>().create(GitHubService::class.java) }
 }

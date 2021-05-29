@@ -8,5 +8,6 @@ data class RepositoryPresentation(
     val owner: OwnerPresentation,
     val description: String? = null,
     val forksCount: Int,
-    val stargazersCount: Int
+    val stargazersCount: Int,
+    val totalCount: Int
 )

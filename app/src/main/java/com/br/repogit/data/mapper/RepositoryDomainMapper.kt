@@ -1,35 +1,27 @@
 package com.br.repogit.data.mapper
 
 import com.br.repogit.data.model.RepositoriesResponse
-import com.br.repogit.presentation.mapper.GithubPresentation
-import com.br.repogit.presentation.mapper.RepositoryItemPresentationMapper
-import com.br.repogit.presentation.model.RepositoriesPresentation
+import com.br.repogit.domain.model.RepositoryDomain
 import com.br.repogit.utils.Mapper
 
 class RepositoryDomainMapper :
-    Mapper<RepositoriesResponse?, GithubPresentation> {
+    Mapper<RepositoriesResponse, List<RepositoryDomain>> {
 
-    private val itemMapper = RepositoryItemDomainMapper()
-    private val itemMapperPresentation = RepositoryItemPresentationMapper()
+    private val ownerMapper = OwnerDomainMapper()
 
-    override fun map(source: RepositoriesResponse?): GithubPresentation {
-        return if (source == null) {
-            GithubPresentation.ErrorResponse
-        } else {
-            if (source.items.isEmpty()) {
-                GithubPresentation.EmptyResponse
-            } else {
-                source.asPresentation(source)
-            }
+    override fun map(source: RepositoriesResponse): List<RepositoryDomain> {
+        return source.items.map {
+            RepositoryDomain(
+                id = it.id,
+                name = it.name,
+                fullName = it.fullName,
+                private = it.private,
+                owner = ownerMapper.map(it.owner),
+                description = it.description,
+                forksCount = it.forksCount,
+                stargazersCount = it.stargazersCount,
+                totalCount = source.totalCount.toInt()
+            )
         }
     }
-
-    private fun RepositoriesResponse.asPresentation(list: RepositoriesResponse) =
-        GithubPresentation.SuccessResponse(
-            RepositoriesPresentation(
-                totalCount = list.totalCount,
-                incompleteResults = list.incompleteResults,
-                items = itemMapperPresentation.map(itemMapper.map(list.items))
-            )
-        )
 }

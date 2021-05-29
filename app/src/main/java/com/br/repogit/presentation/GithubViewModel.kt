@@ -109,7 +109,7 @@ class GithubViewModel(
             is GithubPresentation.EmptyResponse -> _fullResultResponseEvent.triggerEvent()
             is GithubPresentation.ErrorResponse -> _showToast.triggerEvent()
             is GithubPresentation.SuccessResponse -> {
-                currentList = currentList.subList(ZERO, currentList.size - 1) + data.items.items
+                currentList = currentList.subList(ZERO, currentList.size - 1) + data.items
                 _successResponseEvent.triggerPostEvent(currentList)
             }
         }
@@ -120,8 +120,8 @@ class GithubViewModel(
             is GithubPresentation.EmptyResponse -> _emptyResponseEvent.triggerEvent()
             is GithubPresentation.ErrorResponse -> _errorResponseEvent.triggerEvent()
             is GithubPresentation.SuccessResponse -> {
-                totalResult = data.items.totalCount.toInt()
-                currentList = data.items.items
+                totalResult = data.items[0].totalCount
+                currentList = data.items
                 _successResponseEvent.triggerPostEvent(currentList)
             }
         }

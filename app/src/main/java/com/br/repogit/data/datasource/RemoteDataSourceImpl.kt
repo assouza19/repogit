@@ -1,18 +1,21 @@
 package com.br.repogit.data.datasource
 
+import com.br.repogit.data.api.GitHubService
 import com.br.repogit.data.api.RetrofitClient
+import com.br.repogit.data.mapper.RepositoryDomainMapper
 import com.br.repogit.data.model.RepositoriesResponse
+import com.br.repogit.domain.model.RepositoryDomain
 import com.br.repogit.utils.isNullOrEmpty
 import com.br.repogit.utils.orEmpty
 
-private const val EMPTY_LIST = 0L
-
 class RemoteDataSourceImpl(
-    private val retrofit: RetrofitClient
+    private val service: GitHubService
 ) : RemoteDataSource {
 
-    override suspend fun getRepositories(currentPage: Int): RepositoriesResponse? {
-        val response = retrofit.newInstance().getTopRepositories(currentPage = currentPage)
+    private val mapper = RepositoryDomainMapper()
+
+    override suspend fun getRepositories(currentPage: Int): List<RepositoryDomain>? {
+        val response = service.getTopRepositories(currentPage = currentPage)
 
         return if (response.isSuccessful) {
             checkBody(response.body())
@@ -21,11 +24,11 @@ class RemoteDataSourceImpl(
         }
     }
 
-    private fun checkBody(data: RepositoriesResponse?): RepositoriesResponse {
+    private fun checkBody(data: RepositoriesResponse?): List<RepositoryDomain> {
         return if (data.isNullOrEmpty() || data?.items.isNullOrEmpty()) {
-            RepositoriesResponse(EMPTY_LIST, true, listOf())
+            listOf()
         } else {
-            data.orEmpty()
+            mapper.map(data.orEmpty())
         }
     }
 }
