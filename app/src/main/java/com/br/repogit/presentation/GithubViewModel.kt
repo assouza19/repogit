@@ -19,7 +19,7 @@ import kotlin.coroutines.CoroutineContext
 private const val INITIAL_PAGE = 1
 private const val ZERO = 0
 
-class GithubViewModel(
+internal class GithubViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase,
     private val dispatcher: CoroutineContext
 ) : ViewModel() {
