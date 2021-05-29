@@ -16,7 +16,7 @@ Trata-se de um projeto simples, criado apenas como base de estudos.
 ✨ MVVM </br>
 ✨ Injeção de dependência (Koin) </br>
 ✨ Android Jetpack Components </br>
-✨ Consumo de API (Coroutines) </br>
+✨ Consumo de API (Coroutines + Retrofit) </br>
 ✨ Testes unitários (Mockito) </br>
 ✨ Testes de UI (Espresso) usando Robot Pattern </br>
 ✨ Scroll infinito </br>
