@@ -77,7 +77,11 @@ class GithubViewModel(
                     if (isScrolling) handlerNextPageSuccess(it)
                     else handlerSuccess(it)
                 }.onFailure {
-                    handleFailure()
+                    if (isScrolling) {
+                        _showToast.triggerEvent()
+                    } else {
+                        _errorResponseEvent.triggerEvent()
+                    }
                 }
             }
         }
@@ -109,10 +113,6 @@ class GithubViewModel(
                 _successResponseEvent.triggerPostEvent(currentList)
             }
         }
-    }
-
-    private fun handleFailure() {
-        _errorResponseEvent.triggerEvent()
     }
 
     private fun handlerSuccess(data: GithubPresentation) {

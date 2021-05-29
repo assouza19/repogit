@@ -13,7 +13,7 @@ import com.br.repogit.utils.subscribe
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-internal const val VISIBLE_IMAGES_THRESHOLD = 20
+internal const val VISIBLE_IMAGES_THRESHOLD = 15
 
 class GithubActivity : AppCompatActivity(R.layout.activity_github) {
 
@@ -44,7 +44,7 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         }
 
         viewModel.emptyResponseEvent.subscribe(this) {
-            // SHOW EMPTY STATE
+            showFullResultsSnackbar()
             hideLoading()
         }
 
@@ -53,7 +53,7 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         }
 
         viewModel.errorResponseEvent.subscribe(this) {
-            // SHOW ERROR STATE
+            showGenericErrorSnackbar()
             hideLoading()
         }
 
@@ -65,7 +65,7 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         }
 
         viewModel.showToast.subscribe(this) {
-            showErrorSnackbar()
+            showErrorPaginationSnackbar()
         }
     }
 
@@ -102,11 +102,25 @@ class GithubActivity : AppCompatActivity(R.layout.activity_github) {
         snackbar.show()
     }
 
-    private fun showErrorSnackbar() {
+    private fun showGenericErrorSnackbar() {
         var snackbar: Snackbar? = null
         snackbar = Snackbar.make(
             viewBinding.recyclerViewRepositories,
             R.string.couldnt_load,
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(R.string.try_again) {
+                viewModel.getRepositories()
+                snackbar?.dismiss()
+            }
+        snackbar.show()
+    }
+
+    private fun showErrorPaginationSnackbar() {
+        var snackbar: Snackbar? = null
+        snackbar = Snackbar.make(
+            viewBinding.recyclerViewRepositories,
+            R.string.couldnt_load_next_page,
             Snackbar.LENGTH_INDEFINITE
         )
             .setAction(R.string.try_again) {
