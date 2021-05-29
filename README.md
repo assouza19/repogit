@@ -1,5 +1,5 @@
-# Aline Souza - Desenvolvedora Android
-<p align="justify"><strong>Projeto - RepoGit</strong></p>
+# RepoGit
+<p align="justify"><strong>Aline Souza - Desenvolvedora Android</strong></p>
 
 ## Descrição
 O objetivo deste projeto é listar os repositórios que usam Kotlin (como linguagem primária), ordenando por quantidade de estrelas.
