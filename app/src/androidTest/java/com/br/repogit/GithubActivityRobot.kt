@@ -17,15 +17,16 @@ class GithubActivityRobot : GithubActivityAssertionRobot() {
     private val server = MockWebServer()
 
     fun setupMocks() = runBlocking {
+        server.start(serverPort)
+
         server.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 return when (request.path) {
-                    "/search/repositories" -> successResponse
+                    "search/repositories" -> successResponse
                     else -> errorResponse
                 }
             }
         }
-        server.start(serverPort)
     }
 
     fun launch() {
@@ -33,9 +34,10 @@ class GithubActivityRobot : GithubActivityAssertionRobot() {
     }
 
     @After
-    fun closeServer() {
-        server.close()
+    fun tearDown() {
+        server.shutdown()
     }
+
 
     companion object {
         private val successResponse by lazy {

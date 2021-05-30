@@ -1,13 +1,14 @@
-package com.br.repogit.presentation.mapper
+package com.br.repogit.domain.mapper
 
 import com.br.repogit.domain.model.RepositoryDomain
+import com.br.repogit.presentation.mapper.GithubPresentation
 import com.br.repogit.presentation.model.RepositoryPresentation
 import com.br.repogit.utils.Mapper
 
-class RepositoryPresentationMapper :
+class RepositoryToPresentationMapper :
     Mapper<List<RepositoryDomain>?, GithubPresentation> {
 
-    private val ownerMapper = OwnerPresentationMapper()
+    private val ownerMapper = OwnerToPresentationMapper()
 
     override fun map(source: List<RepositoryDomain>?): GithubPresentation {
         return when {

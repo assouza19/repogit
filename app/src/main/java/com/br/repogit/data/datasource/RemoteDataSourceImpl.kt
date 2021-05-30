@@ -1,8 +1,7 @@
 package com.br.repogit.data.datasource
 
 import com.br.repogit.data.api.GitHubService
-import com.br.repogit.data.api.RetrofitClient
-import com.br.repogit.data.mapper.RepositoryDomainMapper
+import com.br.repogit.data.mapper.RepositoryToDomainMapper
 import com.br.repogit.data.model.RepositoriesResponse
 import com.br.repogit.domain.model.RepositoryDomain
 import com.br.repogit.utils.isNullOrEmpty
@@ -12,7 +11,7 @@ class RemoteDataSourceImpl(
     private val service: GitHubService
 ) : RemoteDataSource {
 
-    private val mapper = RepositoryDomainMapper()
+    private val mapper = RepositoryToDomainMapper()
 
     override suspend fun getRepositories(currentPage: Int): List<RepositoryDomain>? {
         val response = service.getTopRepositories(currentPage = currentPage)

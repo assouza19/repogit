@@ -4,10 +4,10 @@ import com.br.repogit.data.model.RepositoriesResponse
 import com.br.repogit.domain.model.RepositoryDomain
 import com.br.repogit.utils.Mapper
 
-class RepositoryDomainMapper :
+class RepositoryToDomainMapper :
     Mapper<RepositoriesResponse, List<RepositoryDomain>> {
 
-    private val ownerMapper = OwnerDomainMapper()
+    private val ownerMapper = OwnerToDomainMapper()
 
     override fun map(source: RepositoriesResponse): List<RepositoryDomain> {
         return source.items.map {

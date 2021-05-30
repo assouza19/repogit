@@ -1,10 +1,10 @@
-package com.br.repogit.presentation.mapper
+package com.br.repogit.domain.mapper
 
 import com.br.repogit.domain.model.OwnerDomain
 import com.br.repogit.presentation.model.OwnerPresentation
 import com.br.repogit.utils.Mapper
 
-class OwnerPresentationMapper : Mapper<OwnerDomain?, OwnerPresentation> {
+class OwnerToPresentationMapper : Mapper<OwnerDomain?, OwnerPresentation> {
 
     override fun map(source: OwnerDomain?): OwnerPresentation {
         return OwnerPresentation(

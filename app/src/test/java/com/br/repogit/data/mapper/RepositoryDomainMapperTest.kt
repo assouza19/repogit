@@ -5,13 +5,12 @@ import com.br.repogit.data.model.RepositoriesResponse
 import com.br.repogit.data.model.Repository
 import com.br.repogit.domain.model.OwnerDomain
 import com.br.repogit.domain.model.RepositoryDomain
-import com.br.repogit.presentation.model.OwnerPresentation
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class RepositoryDomainMapperTest {
 
-    private val mapper: RepositoryDomainMapper = RepositoryDomainMapper()
+    private val mapper: RepositoryToDomainMapper = RepositoryToDomainMapper()
 
     @Test
     fun `when mapper should map to presentation`() {
