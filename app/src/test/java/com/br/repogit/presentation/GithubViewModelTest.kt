@@ -123,25 +123,5 @@ class GithubViewModelTest {
         )
     }
 
-    private fun mockResponseNexPageSuccess(): GithubPresentation {
-        return GithubPresentation.SuccessResponse(
-            listOf(
-                RepositoryPresentation(
-                    id = 2,
-                    name = "teste2",
-                    fullName = "teste repo2",
-                    private = false,
-                    owner = OwnerPresentation(
-                        name = "My name2",
-                        avatarURL = "www.avatar.com"
-                    ),
-                    forksCount = 1111,
-                    stargazersCount = 12,
-                    totalCount = 241
-                )
-            )
-        )
-    }
-
     private fun mockResponseEmptySuccess() = GithubPresentation.EmptyResponse
 }
