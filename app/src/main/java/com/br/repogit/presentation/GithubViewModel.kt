@@ -11,9 +11,7 @@ import com.br.repogit.utils.Event
 import com.br.repogit.utils.SimpleEvent
 import com.br.repogit.utils.triggerEvent
 import com.br.repogit.utils.triggerPostEvent
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 private const val INITIAL_PAGE = 1
@@ -60,28 +58,20 @@ internal class GithubViewModel(
     }
 
     private fun requestList(currentPage: Int, isScrolling: Boolean) {
-        viewModelScope.launch {
+
+        viewModelScope.launch(dispatcher) {
             handlerLoading(isScrolling)
 
-            withContext(dispatcher) {
-                runCatching {
-
-                    /* Delay abaixo completamente desnecessário, somente
-                    *  para ver a animação do lottie =)
-                    *  Em um app real, nunca faria isso :hehe
-                     */
-
-                    delay(1300L)
-                    getRepositoriesUseCase(currentPage)
-                }.onSuccess {
-                    if (isScrolling) handlerNextPageSuccess(it)
-                    else handlerSuccess(it)
-                }.onFailure {
-                    if (isScrolling) {
-                        _showToast.triggerEvent()
-                    } else {
-                        _errorResponseEvent.triggerEvent()
-                    }
+            runCatching {
+                getRepositoriesUseCase(currentPage)
+            }.onSuccess {
+                if (isScrolling) handlerNextPageSuccess(it)
+                else handlerSuccess(it)
+            }.onFailure {
+                if (isScrolling) {
+                    _showToast.triggerEvent()
+                } else {
+                    _errorResponseEvent.triggerEvent()
                 }
             }
         }
