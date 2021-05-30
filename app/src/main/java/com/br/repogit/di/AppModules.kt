@@ -10,6 +10,7 @@ import com.br.repogit.domain.repository.GithubRepository
 import com.br.repogit.domain.usecase.GetRepositoriesUseCase
 import com.br.repogit.presentation.GithubViewModel
 import kotlinx.coroutines.Dispatchers
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -27,7 +28,7 @@ val dataModules = module {
 }
 
 val anotherModules = module {
-    single { RetrofitClient.newInstance() }
+    single { RetrofitClient(application = androidContext()).newInstance() }
     single { HttpClient(get()) }
     factory { get<HttpClient>().create(GitHubService::class.java) }
 }
