@@ -8,11 +8,11 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "https://api.github.com"
 private const val CACHE_SIZE = 5 * 1024 * 1024L // 5 MB
 
 class RetrofitClient(
-    private val application: Context
+    private val application: Context,
+    private val url: String
 ) {
 
     private val gson: Gson by lazy { GsonBuilder().create() }
@@ -26,7 +26,7 @@ class RetrofitClient(
 
     fun newInstance(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(url)
             .client(okHttp)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

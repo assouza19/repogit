@@ -14,6 +14,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
+private const val BASE_URL = "https://api.github.com"
+
 val domainModules = module {
     factory { GetRepositoriesUseCase(repository = get()) }
 }
@@ -28,7 +30,7 @@ val dataModules = module {
 }
 
 val anotherModules = module {
-    single { RetrofitClient(application = androidContext()).newInstance() }
+    single { RetrofitClient(application = androidContext(), BASE_URL).newInstance() }
     single { HttpClient(get()) }
     factory { get<HttpClient>().create(GitHubService::class.java) }
 }

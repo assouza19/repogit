@@ -17,8 +17,6 @@ class GithubActivityRobot : GithubActivityAssertionRobot() {
     private val server = MockWebServer()
 
     fun setupMocks() = runBlocking {
-        server.start(serverPort)
-
         server.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 return when (request.path) {
