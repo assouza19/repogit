@@ -7,7 +7,7 @@ class GithubActivityTest {
     @Test
     fun checkTitleIsVisible() {
         onActivity {
-            setupMocks()
+            setUp()
             launch()
         }
         check {

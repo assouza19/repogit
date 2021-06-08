@@ -8,7 +8,7 @@ fun check(func: GithubActivityAssertionRobot.() -> Unit) =
 open class GithubActivityAssertionRobot : BaseRobot() {
 
     fun titleIsVisible() {
-        checkViewHasText(R.id.textViewTitle, "RepoGit")
+        checkViewHasText(R.id.appTitle, "RepoGit")
     }
 }
 

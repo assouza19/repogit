@@ -1,8 +1,8 @@
 package com.br.repogit.di
 
 import com.br.repogit.data.api.GitHubService
-import com.br.repogit.data.api.HttpClient
-import com.br.repogit.data.api.RetrofitClient
+import com.br.repogit.data.api.retrofit.HttpClient
+import com.br.repogit.data.api.retrofit.RetrofitClient
 import com.br.repogit.data.datasource.RemoteDataSource
 import com.br.repogit.data.datasource.RemoteDataSourceImpl
 import com.br.repogit.data.repository.GithubRepositoryImpl

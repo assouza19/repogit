@@ -9,7 +9,7 @@ import com.br.repogit.R
 import com.br.repogit.databinding.RecyclerRepositoryItemBinding
 import com.br.repogit.presentation.VISIBLE_IMAGES_THRESHOLD
 import com.br.repogit.presentation.model.RepositoryPresentation
-import com.br.repogit.utils.ordinalOf
+import com.br.repogit.utils.Extensions
 import com.squareup.picasso.Picasso
 
 private typealias RepositoryAdapterCallbackAlias = (RepositoryAdapterCallback) -> Unit
@@ -68,7 +68,7 @@ internal class GithubAdapter(
                 R.drawable.ic_public_icon
             }
 
-            binding.positionDescription.text = ordinalOf(layoutPosition + 1)
+            binding.positionDescription.text = Extensions.ordinalOf(layoutPosition + 1)
 
             binding.iconPrivacy.setImageResource(iconPrivacy)
 

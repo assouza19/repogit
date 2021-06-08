@@ -13,7 +13,7 @@ data class Repository(
     val fullName: String? = null,
 
     @SerializedName("private")
-    val private: Boolean,
+    val private: Boolean = false,
 
     @SerializedName("owner")
     val owner: Owner,

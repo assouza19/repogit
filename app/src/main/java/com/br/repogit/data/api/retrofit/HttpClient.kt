@@ -1,4 +1,4 @@
-package com.br.repogit.data.api
+package com.br.repogit.data.api.retrofit
 
 import retrofit2.Retrofit
 

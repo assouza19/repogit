@@ -1,5 +1,6 @@
-package com.br.repogit.data.api
+package com.br.repogit.data.api.retrofit
 
+import android.util.Log
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
