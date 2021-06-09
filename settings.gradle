@@ -1,2 +1,3 @@
-include ':app'
+include ':search'
+include ':base'
 rootProject.name = "Repogit"
