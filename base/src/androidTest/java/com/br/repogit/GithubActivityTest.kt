@@ -10,6 +10,9 @@ class GithubActivityTest {
             setUp()
             launch()
         }
+        action {
+            clickOnConfirmButton()
+        }
         check {
             titleIsVisible()
         }
